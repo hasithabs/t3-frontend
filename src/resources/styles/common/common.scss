@@ -1,0 +1,11 @@
+@import 'font-awesome/font-awesome';
+@import 'simple-line-icons.scss';
+
+.hb-page-title {
+  border-bottom: 1px solid #e7ecf1;
+  padding-bottom: 20px !important;
+}
+
+.page-sidebar .page-sidebar-menu .sub-menu > li.open > a {
+  background: none !important;
+}

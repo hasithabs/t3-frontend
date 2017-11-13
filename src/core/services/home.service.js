@@ -1,3 +1,4 @@
+      /*eslint-disable */
 angular
   .module('core.service')
   .factory('HomeAPI',
@@ -22,3 +23,4 @@ angular
       // Return public API
       return services;
     });
+/*eslint-enable */
