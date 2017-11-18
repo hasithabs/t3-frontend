@@ -121,6 +121,9 @@ body {
     opacity: 0 !important;
     transform: scale(2.5); } }
 
+.input-inline {
+  display: inline !important; }
+
 .form-group.form-md-line-input {
   position: relative;
   margin: 0 0 35px 0;
@@ -217,13 +220,13 @@ body {
       opacity: 1 ;
       filter: alpha(opacity=100) ; }
     .form-group.form-md-line-input .form-control.edited:not([readonly]) ~ .help-block-error, .form-group.form-md-line-input .form-control:focus:not([readonly]) ~ .help-block-error {
-      opacity: 0 ;
+      opacity: 1 ;
       filter: alpha(opacity=0) ; }
     .form-group.form-md-line-input .form-control.edited:not([readonly]):not(:focus) ~ .help-block {
       opacity: 0 ;
       filter: alpha(opacity=0) ; }
     .form-group.form-md-line-input .form-control.edited:not([readonly]):not(:focus) ~ .help-block-error {
-      opacity: 0 ;
+      opacity: 1 ;
       filter: alpha(opacity=0) ; }
     .form-group.form-md-line-input .form-control[readonly], .form-group.form-md-line-input .form-control[disabled],
     fieldset[disabled] .form-group.form-md-line-input .form-control {
@@ -13568,7 +13571,7 @@ Custimized Bootstrap Wells
   padding: 10px; }
 
 /*--------------------------------------------------
-	[Widgets]
+  [Widgets]
 ----------------------------------------------------*/
 /*** Widget Background Colors ***/
 .widget-bg-color-purple {

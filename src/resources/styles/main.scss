@@ -1,3 +1,7 @@
+// Theme
+@import 'theme/layout.scss';
+@import 'theme/components-md.scss';
+
 // Base
 @import 'base/variables';
 @import 'base/mixins';
@@ -6,10 +10,6 @@
 @import 'base/typography';
 @import 'base/overides';
 
-// Theme
-@import 'theme/layout.scss';
-@import 'theme/components-md.scss';
-
 // Components
 @import 'components/forms';
 @import 'components/tables';
@@ -17,7 +17,7 @@
 @import 'components/nav';
 
 // Pages
-// @import 'pages/home/home';
+@import 'pages/checkin';
 
 // Quick CSS
 @import 'base/shame';
