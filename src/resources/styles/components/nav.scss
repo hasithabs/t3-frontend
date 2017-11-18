@@ -1,0 +1,231 @@
+.nav-menu-bar {
+  background-color: $blueyale;
+  margin-bottom: 20px;
+}
+
+.nav {
+    position: relative;
+    padding: 0 0 0 4px;
+    margin: 0;
+}
+
+
+.nav a,
+.nav a:link,
+.nav a:visited,
+.nav a:hover,
+.nav a:focus,
+span {
+    color: $white;
+    text-decoration: none;
+}
+
+
+.nav > li {
+    display: inline-block;
+    text-align: center;
+    margin-left: -4px;
+    /* For the inline-block spacing */
+
+    &:hover {
+      background-color: $bluespace;
+
+      > a {
+        color: $white;
+
+        &:hover {
+          background-color: $bluespace;
+        }
+      }
+
+      > ul {
+        opacity: 1;
+        visibility: visible;
+        margin-top: 0px;
+      }
+    }
+
+    > a {
+      padding: 20px 18px;
+      display: block;
+    }
+
+    > ul {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      list-style: none;
+      top: 53px;
+      background-color: $bluespace;
+      width: 200px;
+      text-align: left;
+      margin-top: 30px;
+      padding: 0px;
+      z-index: 99;
+
+      li {
+        font-size: 11px;
+        position: relative;
+        display: block;
+        padding: 15px 10px;
+
+        &:hover {
+          background-color: $blueyale;
+
+          > a {
+            color: $white;
+          }
+        }
+
+        ul {
+          li {
+            &:hover {
+              background-color: $blueyale;
+            }
+          }
+        }
+      }
+    }
+}
+
+input#mobile_menu {
+    display: none;
+}
+
+.nav > li > ul li ul li ul {
+    background-color: $blueyale;
+}
+
+.nav > li > ul li ul li ul li:hover {
+    background-color: $blueyale;
+}
+
+.nav .dropdown {
+  width: 150px;
+}
+
+.nav > li > .fulldrop {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    list-style: none;
+    top: 53px;
+    left: 0px;
+    background-color: $bluespace;
+    width: 100%;
+    min-height: 100px;
+    text-align: left;
+    margin-top: 30px;
+    padding: 0;
+    z-index: 99;
+    overflow: hidden;
+}
+
+
+.nav > li:hover .fulldrop {
+    opacity: 1;
+    visibility: visible;
+    margin-top: 0px;
+}
+
+.nav ul li:hover:after {
+    color: $white;
+}
+
+.nav > li:hover .coldrop {
+    opacity: 1;
+    visibility: visible;
+    margin-top: 0px;
+}
+
+.nav .coldrop .column {
+    width: 130px;
+    margin: 0 9px;
+}
+
+
+
+.nav .column {
+  width: 100%;
+  float: left;
+  text-align: center;
+  color: $white;
+
+  ul {
+    padding: 0;
+    margin: 0;
+
+    li {
+      list-style: none;
+      padding: 10px;
+
+      &:hover {
+        background-color: $bluesdenim;
+      }
+
+      a {
+        display: block;
+      }
+
+      &:last-child a {
+      }
+    }
+  }
+}
+
+
+/* Arrows */
+
+.nav > li.dropdown > a:after {
+    content: " \f107";
+    font-family: FontAwesome;
+    color: $white;
+}
+
+.nav ul li.dropdown:after {
+
+    position: absolute;
+    left: 170px;
+    font-family: FontAwesome;
+    display: inline-block;
+    color: $white;
+    margin-left: 10px;
+    margin-top: 2px;
+}
+
+
+.nav > li.search {
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    float: right;
+    padding: 11px 6px;
+    position: relative;
+}
+
+.nav > li.search:hover {
+    background-color: transparent;
+}
+
+
+.nav > li input {
+    padding: 7px 6px 6px 38px;
+    margin: 0 5px;
+    color: $white;
+    border: none;
+    background-color: $bluespace;
+    font-size: 14px;
+    border: 2px solid $bluespace;
+}
+
+.nav > li input:focus {
+    outline: none;
+    border-color: $white;
+}
+
+.nav > li.search i {
+    position: absolute;
+    left: 20px;
+    top: 21px;
+    color: $white;
+}

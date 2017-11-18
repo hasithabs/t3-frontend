@@ -1,6 +1,23 @@
-@import 'common/common';
+// Base
+@import 'base/variables';
+@import 'base/mixins';
+@import 'base/fonts';
+@import 'base/general';
+@import 'base/typography';
+@import 'base/overides';
 
-@import 'theme/components-md.scss';
-@import 'theme/plugins-md.scss';
-@import 'theme/darkblue.scss';
+// Theme
 @import 'theme/layout.scss';
+@import 'theme/components-md.scss';
+
+// Components
+@import 'components/forms';
+@import 'components/tables';
+@import 'components/filter';
+@import 'components/nav';
+
+// Pages
+// @import 'pages/home/home';
+
+// Quick CSS
+@import 'base/shame';

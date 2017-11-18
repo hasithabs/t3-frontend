@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+
+// Break points
+$bp-lg: 1200px; // Large desktops
+$bp-md: 992px; // Tab landscape and small desktop devices
+$bp-sm: 768px; // Tab portrait
+$bp-xs: 560px; // Mobile devices
+$bp-xxs: 480px; // Small Mobile devices
+$bp-xxxs: 320px;
+
+// Font Sizes
+$font-size-12: 12px;
+$font-size-13: 13px;
+$font-size-14: 14px;
+$font-size-16: 16px;
+$font-size-17: 17px;
+$font-size-18: 18px;
+$font-size-20: 20px;
+$font-size-23: 23px;
+$font-size-24: 24px;
+$font-size-30: 30px;
+$font-size-40: 40px;
+$font-size-50: 50px;
+
+// Colors
+$white: #ffffff;
+$blueyale: #34566c;
+$bluespace: #1f435e;
+$bluesdenim: #151E3D;
+$grey-1: #B3B3B3;
+$grey-2: #636363;
+$grey-3: #393D40;
+$black: #000000;
+
+// Background Colors
+$bg-white: $white;
+$bg-black: $black;
+
+// Font Colors
+$font-white: $white;
+$font-black: $black;
+
+// Border Colors
+$br-white: $white;
+$br-black: $black;
