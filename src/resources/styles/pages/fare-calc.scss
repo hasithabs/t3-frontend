@@ -1,0 +1,73 @@
+.fare-calc-section {
+
+}
+
+.checkin-section {
+  .ci-logo-section {
+    text-align: center;
+    padding-bottom: 30px;
+  }
+
+  .ci-title-section {
+    >div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        height: 90px;
+        width: auto;
+        border-radius: 100px;
+      }
+
+      h2 {
+        margin: 0;
+        margin-left: 20px;
+        padding: 10px 15px;
+        color: $bluespace;
+        border-top: 1px solid $grey-1;
+        border-bottom: 1px solid $grey-1;
+      }
+    }
+  }
+
+  .ci-table-section {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    table {
+      width: 500px;
+
+      tbody {
+        border: 3px solid $bluespace;
+      }
+
+      tr td:first-child {
+        font-weight: 600;
+      }
+
+      td {
+        border: 1px solid $grey-1;
+        padding: 15px;
+      }
+    }
+  }
+
+  .ci-map-section {
+    padding-bottom: 50px;
+
+    .ci-end-msg {
+      text-align: center;
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 18px;
+      font-weight: 300;
+      color: $white;
+      background-color: $bluespace;
+    }
+  }
+}
+
+

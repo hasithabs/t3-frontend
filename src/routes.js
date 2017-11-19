@@ -28,5 +28,13 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           component: 'sampleCom'
         }
       }
+    })
+    .state('app.checkin', {
+      url: '/checkin',
+      views: {
+        mainContent: {
+          component: 'checkinCom'
+        }
+      }
     });
 }
