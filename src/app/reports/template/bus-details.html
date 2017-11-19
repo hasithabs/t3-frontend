@@ -1,9 +1,68 @@
-<div class="col-md-6">
-    
-    <div class="input-group" moment-picker="$ctrl.timepicker" format="HH:mm:ss">
-        <span class="input-group-addon">
-            <i class="octicon octicon-clock"></i>
-        </span>
-        <input class="form-control" placeholder="Select a time" ng-model="$ctrl.timepicker" ng-model-options="{ updateOn: 'blur' }">
+<div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="font-blue">Start Date : </div>
+            <div class="input-group" moment-picker="$ctrl.startDate" format="L">
+                <span class="input-group-addon">
+                    <i class="octicon octicon-clock"></i>
+                </span>
+                <input class="form-control" placeholder="Select a time" ng-model="$ctrl.startDate" ng-model-options="{ updateOn: 'blur' }">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="font-blue">End Date : </div>
+            <div class="input-group" moment-picker="$ctrl.endDate" format="L">
+                <span class="input-group-addon">
+                    <i class="octicon octicon-clock"></i>
+                </span>
+                <input class="form-control" placeholder="Select a time" ng-model="$ctrl.endDate" ng-model-options="{ updateOn: 'blur' }">
+            </div>
+        </div>
     </div>
 </div>
+
+<div>
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-settings font-blue"></i>
+                <span class="caption-subject font-blue sbold uppercase">Bus Details</span>
+            </div>
+            <div class="actions">
+                <div class="btn-group btn-group-devided" data-toggle="buttons">
+                    <button type="button" class="btn blue">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="table-scrollable">
+                <table class="table table-hover table-light">
+                    <thead>
+                        <tr>
+                            <th> ID </th>
+                            <th> Bus Name </th>
+                            <th> Route Name </th>
+                            <th> Start Time </th>
+                            <th> End Time </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="bus in $ctrl.busDetails">
+                            <td> {{bus.BusID}} </td>
+                            <td> {{bus.BusName}} </td>
+                            <td> {{bus.Route}} </td>
+                            <td> {{bus.StartTime | date : 'dd.MM.y'}} {{bus.StartTime | date : 'HH:mm'}}</td>
+                            <td> {{bus.EndTime | date : 'dd.MM.y'}} {{bus.EndTime | date : 'HH:mm'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="actions">
+                <div class="btn-group btn-group-devided" data-toggle="buttons">
+                    <button type="button" class="btn blue">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
