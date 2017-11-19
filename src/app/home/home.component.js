@@ -3,6 +3,6 @@ angular
   .component('homeCom', {
     templateUrl: 'app/home/template/home.html',
     controller: function () {
-      var self = this;
+      //var self = this;
     }
   });

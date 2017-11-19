@@ -1,0 +1,50 @@
+<h1 class="page-title hb-page-title"> T3 Reports</h1>
+<div>
+  <div class="col-md-5">
+    <div class="portlet light portlet-fit bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class=" icon-layers font-blue"></i>
+          <span class="caption-subject font-blue bold uppercase">Bus details</span>
+        </div>
+      </div>
+      <div class="portlet-body" ui-sref="app.bus-details">
+        <button type="button" class="btn blue">View Bus Details</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="portlet light portlet-fit bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class=" icon-layers font-blue"></i>
+          <span class="caption-subject font-blue bold uppercase">Trip details</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <button type="button" class="btn blue">View Trip Details</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="portlet light portlet-fit bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class=" icon-layers font-blue"></i>
+          <span class="caption-subject font-blue bold uppercase">Route details</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div id="gmap_static" class="gmaps">
+            <div style="height:100%;overflow:hidden;display:block;background: url(http://maps.googleapis.com/maps/api/staticmap?center=6.927079,79.861244&amp;size=640x300&amp;sensor=true&amp;zoom=15) no-repeat 50% 50%;">
+                <img src="http://maps.googleapis.com/maps/api/staticmap?center=6.927079,79.861244&amp;size=640x300&amp;sensor=true&amp;zoom=20" style="visibility:hidden" alt="" /> </div>
+        </div>
+    </div>
+    <div class="portlet-body">
+      <form class="form-inline margin-bottom-10" action="#">
+        <input type="button" id="gmap_routes_start" class="btn blue" value="View Route Details" /></form>
+      <div class="label label-danger visible-ie8"> Not supported in Internet Explorer 8 </div>
+    </div>
+    </div>
+  </div>
+</div>
