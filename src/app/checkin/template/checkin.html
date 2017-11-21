@@ -21,7 +21,7 @@
     </form>
   </div>
 
-  <div ng-show="$ctrl.isCardValid" class="col-md-12">
+  <div ng-if="$ctrl.isCardValid" class="col-md-12">
     <div class="checkin-section">
       <div class="ci-logo-section">
         <h2>Automate Public Transport</h2>
@@ -43,28 +43,36 @@
             </tr>
             <tr>
               <td>Available balance</td>
-              <td>Rs. 1500.00</td>
+              <td>Rs. {{$ctrl.cardDetails.balance}}.00</td>
             </tr>
             <tr>
               <td>Check-in Location</td>
-              <td>Kandy</td>
+              <td>{{$ctrl.routeDetails.start}}</td>
+            </tr>
+            <tr ng-if="$ctrl.isDestinationKnow">
+              <td>Distance</td>
+              <td>{{$ctrl.tripDistance.text}}</td>
+            </tr>
+            <tr ng-if="$ctrl.isDestinationKnow">
+              <td>Duration</td>
+              <td>{{$ctrl.tripDuration.text}}</td>
             </tr>
             <tr>
               <td>Check-in Time and Date</td>
-              <td>11.25.17 - 01/10/2017</td>
+              <td>{{$ctrl.dateNow}}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div class="ci-map-section col-md-12">
-        <ng-map zoom="14" id="checkin-map" center="{{$ctrl.origin}}">
+        <ng-map zoom="14" id="checkin-map" center="{{$ctrl.routeDetails.start}}">
           <directions
-          draggable="true"
+          draggable="false"
           panel="directions-panel"
           travel-mode="{{$ctrl.travelMode}}"
-          origin="{{$ctrl.origin}}"
-          destination="{{$ctrl.destination}}"></directions>
+          origin="{{$ctrl.routeDetails.start}}"
+          destination="{{$ctrl.routeDetails.end}}"></directions>
         </ng-map>
         <div class="ci-end-msg">Enjoy the Trip Have a nice Trip !!!</div>
       </div>

@@ -2,49 +2,65 @@ angular
   .module('app')
   .component('checkinCom', {
     templateUrl: 'app/checkin/template/checkin.html',
-    controller: function ($log, $q, FareCalculationSDK, moment) {
+    controller: function ($log, $q, FareCalculationSDK, SweetAlert, moment, Notification) {
       var self = this;
+
+      self.dateNow = moment().format('h:mm:ss - MMMM Do YYYY');;
 
       self.checkinSubmitBtnClicked = false;
       self.isCardValid = false;
+      self.isDestinationKnow = false;
+
+      self.busId = 1;
+      self.routeId = 1;
+      self.cardId = 123456;
 
       self.travelMode = "DRIVING";
-      self.wayPoints = [
-      {
-        location: {
-          lat: 44.32384807250689,
-          lng: -78.079833984375
-        },
-        stopover: true
-      }, {
-        location: {
-          lat: 44.55916341529184,
-          lng: -76.17919921875
-        },
-        stopover: true
-      }];
-      self.origin = "Kandy-Colombo Intercity Bus Station";
-      self.destination = "Colombo Central Bus Stand";
+      self.travelRate = 10/1000;
+      // self.origin = "Kandy-Colombo Intercity Bus Station";
+      // self.destination = "Colombo Central Bus Stand";
 
-
-      self.cardId = 123456;
       /**
-       * Passenger Check In
+       * Gets the bus details.
+       *
+       * @return     {object}  The bus details.
        */
-      self.onCheckInClicked = function () {
-        self.checkinSubmitBtnClicked = true;
-        getCardDetails(self.cardId).then(function (cardItem) {
-          if (cardItem.status === "active") {
-
-          }
-          console.log(cardItem);
-          console.log(cardItem.expiry_date);
-          console.log(moment(cardItem.expiry_date));
-          console.log(moment().diff(cardItem.expiry_date, 'days'));
+      function getBusDetails() {
+        var deferred = $q.defer();
+        FareCalculationSDK.getBus(self.busId).then(function (response) {
+          self.busDetails = response.content[0];
+          $log.log("*********self.busDetails********");
+          $log.log(self.busDetails);
+          deferred.resolve(response.content);
         }, function (error) {
-
+          $log.debug(error);
+          deferred.reject(error);
         });
-      };
+
+        return deferred.promise;
+      }
+
+      /**
+       * Gets the route details.
+       *
+       * @return     {object}  The route details.
+       */
+      function getRouteDetails() {
+        var deferred = $q.defer();
+        FareCalculationSDK.getRoute(self.routeId).then(function (response) {
+          self.routeDetails = response.content[0];
+          $log.log("*********self.routeDetails********");
+          $log.log(self.routeDetails);
+          deferred.resolve(response.content);
+
+          getGoogleMapDetails(self.routeDetails.start, self.routeDetails.end);
+        }, function (error) {
+          $log.debug(error);
+          deferred.reject(error);
+        });
+
+        return deferred.promise;
+      }
 
       /**
        * Gets the card details.
@@ -65,6 +81,140 @@ angular
 
         return deferred.promise;
       }
+
+      /**
+       * Gets the google map details.
+       *
+       * @param      {string}  start   The start
+       * @param      {string}  end     The end
+       */
+      var directionsService = new google.maps.DirectionsService();
+      function getGoogleMapDetails(startLocation, endLocation) {
+        var deferred = $q.defer();
+
+        var request = {
+          origin      : startLocation,
+          destination : endLocation,
+          travelMode  : self.travelMode
+        };
+
+        directionsService.route(request, function(response, status) {
+          console.log(response);
+          console.log(status);
+          if ( status == google.maps.DirectionsStatus.OK ) {
+            deferred.resolve(response.routes[0].legs[0]);
+            self.tripDistance = response.routes[0].legs[0].distance;
+            self.tripDuration = response.routes[0].legs[0].duration;
+          }
+          else {
+            deferred.reject(status);
+          }
+        });
+
+        return deferred.promise;
+      }
+
+      getBusDetails();
+      getRouteDetails();
+
+      function promptDestination() {
+        self.isDestinationKnow = true;
+        swal({
+          title: "",
+          text: "Please enter your destination place",
+          type: "input",
+          showCancelButton: false,
+          closeOnConfirm: false,
+          inputPlaceholder: "Type Destination"
+        }, function (inputValue) {
+          if (inputValue === false) return false;
+          if (inputValue === "") {
+            swal.showInputError("You need to write something!");
+            return false
+          }
+
+          getGoogleMapDetails(self.routeDetails.start, inputValue).then(function ( response) {
+            if (self.cardDetails.balance < response.distance.value * self.travelRate) {
+              SweetAlert.swal({
+                title: "Oops!",
+                text: "Your current balance is not enough to travel to the given destination",
+                type: "error",
+                timer: 3000,
+                showConfirmButton: true
+              }, function () {
+                SweetAlert.close();
+                return true;
+              });
+            } else {
+              self.routeDetails.end = inputValue;
+              SweetAlert.swal({
+                title: "Nice!",
+                text: "You'll arrive in " + self.tripDuration.text,
+                type: "success",
+                timer: 2000,
+                showConfirmButton: true
+              }, function () {
+                SweetAlert.close();
+                return true;
+              });
+            }
+          }, function (error) {
+            Notification.error("We can't find your destination. Please try again");
+              // SweetAlert.swal({
+              //   title: "Oops!",
+              //   text: "We can't find your destination.",
+              //   type: "error",
+              //   timer: 2000,
+              //   showConfirmButton: false
+              // }, function () {
+              //   return false;
+              // });
+          });
+        })
+      }
+
+      /**
+       * Passenger Check In
+       */
+      self.onCheckInClicked = function () {
+        self.checkinSubmitBtnClicked = true;
+        getCardDetails(self.cardId).then(function (cardItem) {
+          if (cardItem.status !== "active") {
+            SweetAlert.swal({
+              title: "Oops!",
+              text: "Your card is deactivated",
+              type: "error",
+              timer: 2000,
+              showConfirmButton: true
+            }, function () {
+              SweetAlert.close();
+              return false;
+            });
+          }
+
+          if (moment().diff(cardItem.expiry_date, 'days') >= 0) {
+            SweetAlert.swal({
+              title: "Oops!",
+              text: "Your card is expired.",
+              type: "error",
+              timer: 2000,
+              showConfirmButton: true
+            }, function () {
+              SweetAlert.close();
+              return false;
+            });
+          }
+
+          if (cardItem.balance < self.tripDistance.value * self.travelRate) {
+            promptDestination();
+          }
+
+          self.isCardValid = true;
+
+        }, function (error) {
+
+        });
+      };
     }
   });
 

@@ -36,5 +36,13 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           component: 'checkinCom'
         }
       }
+    })
+    .state('app.checkout', {
+      url: '/checkout',
+      views: {
+        mainContent: {
+          component: 'checkoutCom'
+        }
+      }
     });
 }

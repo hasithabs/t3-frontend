@@ -4,7 +4,9 @@ angular
     function ($resource, SETTINGS) {
       // Public API
       var services = {
-        card: card
+        card: card,
+        bus: bus,
+        route: route
       };
 
       function card() {
@@ -17,6 +19,28 @@ angular
           },
           update: {
             method: 'PUT',
+            isArray: false,
+            cancellable: true
+          }
+        });
+      }
+
+      function bus() {
+        var url = SETTINGS.SITE_URL + '/buses/:id';
+        return $resource(url, {did: '@id'}, {
+          get: {
+            method: 'GET',
+            isArray: false,
+            cancellable: true
+          }
+        });
+      }
+
+      function route() {
+        var url = SETTINGS.SITE_URL + '/routes/:id';
+        return $resource(url, {did: '@id'}, {
+          get: {
+            method: 'GET',
             isArray: false,
             cancellable: true
           }
