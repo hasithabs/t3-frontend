@@ -10,7 +10,7 @@
     <form name="$ctrl.checkInForm">
       <div class="col-md-9">
         <div class="form-group form-md-line-input" ng-class="{ 'has-error' : $ctrl.checkInForm.cardId.$invalid && $ctrl.checkinSubmitBtnClicked }">
-          <input name="cardId" type="text" class="form-control" ng-model="$ctrl.cardId" required>
+          <input name="cardId" type="number" class="form-control" ng-model="$ctrl.cardId" ng-pattern="/^-?[0-9][^\.]*$/" min="0" required>
           <label for="form_control_1">Card Id</label>
           <span ng-show="$ctrl.checkInForm.cardId.$invalid && $ctrl.checkinSubmitBtnClicked" class="help-block help-block-error">This field is invalid.</span>
         </div>

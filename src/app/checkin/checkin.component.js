@@ -15,6 +15,7 @@ angular
       self.routeId = 1;
       self.cardId = 123456;
 
+      self.checkinLocatin = "Malabe Bus Station, Malabe";
       self.travelMode = "DRIVING";
       self.travelRate = 10/1000;
       // self.origin = "Kandy-Colombo Intercity Bus Station";
@@ -70,7 +71,7 @@ angular
       function getCardDetails(cardId) {
         var deferred = $q.defer();
         FareCalculationSDK.getCards(cardId).then(function (response) {
-          self.cardDetails = response.content;
+          self.cardDetails = response.content[0];
           $log.log("*********self.cardDetails********");
           $log.log(self.cardDetails);
           deferred.resolve(response.content);
@@ -178,7 +179,29 @@ angular
        */
       self.onCheckInClicked = function () {
         self.checkinSubmitBtnClicked = true;
+
+        if (self.checkInForm.$invalid) {
+          return;
+        }
+
         getCardDetails(self.cardId).then(function (cardItem) {
+          console.log(cardItem);
+
+          if (cardItem.length == 0) {
+            SweetAlert.swal({
+              title: "Oops!",
+              text: "T3 Card not found.",
+              type: "error",
+              timer: 2000,
+              showConfirmButton: true
+            }, function () {
+              SweetAlert.close();
+            });
+            return;
+          } else {
+            cardItem = cardItem[0];
+          }
+
           if (cardItem.status !== "active") {
             SweetAlert.swal({
               title: "Oops!",
@@ -212,7 +235,16 @@ angular
           self.isCardValid = true;
 
         }, function (error) {
-
+          SweetAlert.swal({
+            title: "Oops!",
+            text: "Something went wrong, Please try again later.",
+            type: "error",
+            timer: 2000,
+            showConfirmButton: true
+          }, function () {
+            SweetAlert.close();
+            return false;
+          });
         });
       };
     }
