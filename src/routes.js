@@ -37,6 +37,14 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('app.route-details', {
+      url: '/route-details',
+      views: {
+        mainContent: {
+          component: 'routeDetailsCom'
+        }
+      }
+    })
     .state('app.sample', {
       url: '/sample',
       views: {

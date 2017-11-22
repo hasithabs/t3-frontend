@@ -11,7 +11,8 @@
     "simple-line-icons": "^2.4.1",
     "google-maps": "^3.2.1",
     "angular-moment": "^1.1.0",
-    "angular-moment-picker": "moment-picker#^0.10.1"
+    "angular-moment-picker": "moment-picker#^0.10.1",
+    "ngmap": "^1.18.4"
   },
   "devDependencies": {
     "angular-mocks": "^1.6.2"

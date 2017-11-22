@@ -41,20 +41,20 @@
                 <table class="table table-hover table-light">
                     <thead>
                         <tr>
-                            <th> ID </th>
-                            <th> Bus Name </th>
-                            <th> Route Name </th>
-                            <th> Start Time </th>
-                            <th> End Time </th>
+                            <th class="font-blue"> ID </th>
+                            <th class="font-blue"> Bus Number </th>
+                            <th class="font-blue"> Bus Type </th>
+                            <th class="font-blue"> Driver Name </th>
+                            <th class="font-blue"> Number of Seats </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="bus in $ctrl.busDetails">
-                            <td> {{bus.BusID}} </td>
-                            <td> {{bus.BusName}} </td>
-                            <td> {{bus.Route}} </td>
-                            <td> {{bus.StartTime | date : 'dd.MM.y'}} {{bus.StartTime | date : 'HH:mm'}}</td>
-                            <td> {{bus.EndTime | date : 'dd.MM.y'}} {{bus.EndTime | date : 'HH:mm'}}</td>
+                            <td> {{bus.bus_id}} </td>
+                            <td> {{bus.bus_number}} </td>
+                            <td> {{bus.bus_type}} </td>
+                            <td> {{bus.driver_name}}</td>
+                            <td> {{bus.number_of_seats}}</td>
                         </tr>
                     </tbody>
                 </table>
