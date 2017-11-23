@@ -29,6 +29,14 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('app.topup', {
+      url: '/topup',
+      views: {
+        mainContent: {
+          component: 'topupCom'
+        }
+      }
+    })
     .state('app.checkin', {
       url: '/checkin',
       views: {

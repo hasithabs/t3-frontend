@@ -1,0 +1,405 @@
+    <div class="container cardswapsection" ng-show="cardSwap">
+        <div class="row col-md-12 col-sm-12 well well-sm">
+            <h4 class="col-md-9 banner">Please swap your card to do the transaction.</h4>
+        </div>
+        <div>
+            <div class="container-fluid col-md-12 col-sm-12 body">
+
+
+                <div class="body">
+                    <div class="row col-md-12 ">
+
+                        <div class="cardInsert">
+
+                            <div class="cardInsert_body" ng-click="">
+                                <img class="touch-card" src="../../../resources/images/topup/wifi-signal.svg">
+                            </div>
+                            <div class="cardInsert_fotter">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row col-md-12">
+
+                        <div class="cardDetails form-group">
+
+                            <div class="row">
+                                <div>
+                                    <div class="middle">
+                                        <form onsubmit="getData()">
+                                            <div class="form-group row">
+                                                <div class="cardNumber">
+                                                    <input type="text" class="form-control" id="cardNumber" placeholder="Enter Card Number Eg:-5755757" ng-model="cardNumber">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div ng-show="processIndicator">
+                                            <div class="name">Reading Card Details.</div>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-striped active" id="myBar"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- <div class="info">(Swap the card to card reader in order to do transactions)</div> -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="container  col-md-12 topupsection" ng-show="topup">
+        <div class="col-md-12 col-sm-12 ">
+
+            <div class="container-fluid col-md-12 col-sm-12 body">
+
+                <div class="row col-md-12 col-sm-12 well well-sm">
+                    <div class="col-md-1 userSection ">
+                        <div class="image1">
+                            <img class="user-icon" src="../../../resources/images/topup/man.svg" class="pull-left">
+                        </div>
+                    </div>
+                    <h4 class="col-md-9 welcomeText">Welcome {{loadedPassenger.name.split(' ')[0]}}</h4>
+                </div>
+
+                <div class="row col-md-6 col-sm-6 details">
+                    <div class="form-group Option" ng-show="!reload && !cashPay && !cashPayConf && !cardPay">
+
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-4 col-form-label">Name</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly class="form-control" id="Passengername" value="{{loadedPassenger.name}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-4 col-form-label">Passenger Id</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly class="form-control" id="Passengerid" value="{{loadedPassenger.passenger_id}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-4 col-form-label">Available balance</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly class="form-control" id="availabaleBalance" value="{{loadedCard.balance}}.00 LKR">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-4 col-form-label">Expier Date</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly class="form-control" id="expierDate" value="{{loadedCard.expiry_date}}">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-4 col-form-label">Card Type</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly class="form-control" id="cardType" value="{{loadedCard.type}}">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-control Option" ng-show="reload">
+                        <div class="ops_header col-md-12">
+                            <div class=" msg">
+                                <div>Which method Do you prefer to do the Roload?</div>
+                            </div>
+                        </div>
+                        <div class="ops_body col-md-12">
+                            <button type="button" class="btn-default btn-lg  confButton1" ng-click="docashPayment()">Cash</button>
+                            <button type="button" class="btn-default btn-lg confButton2" ng-click="docardPayment()">Cards</button>
+                        </div>
+                    </div>
+
+
+                    <div class="form-control Option" ng-show="cashPay">
+                        <div class="ops_header col-md-12">
+                            <div>
+                                <div class="msg_getmoney">Please Enter money to money box.</div>
+                                <div>
+                                    <label>Amount</label>
+                                    <input type="number" class="form-control" id="enterdAmount" ng-model="enterdAmount" placeholder="RS.00.00">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ops_body_pay col-md-12">
+
+                            <button type="button" class="btn-default btn-lg payButton" ng-click="pay()">Pay</button>
+                        </div>
+                    </div>
+
+                    <div class="form-control Option" ng-show="cashPayConf">
+                        <div class="ops_header col-md-12">
+                            <div class="cashMsg">
+                                <div class="cashMsg_line1">You have Entered,</div>
+                                <div class="cashMsg_content">{{totalmoney}}.00 LKR</div>
+                                <div class="cashMsg_content">Do you need to reload this amount?</div>
+                            </div>
+                        </div>
+                        <div class="ops_body_cashConf col-md-12">
+                            <button type="button" class="btn-default btn-lg  confButton1" ng-click="transactionCompleate()">Yes</button>
+                            <button ng-show="NObuttonStatus" type="button" class="btn-default btn-lg confButton2" ng-click="callBackTomoneyLoad()">No</button>
+                        </div>
+                    </div>
+
+                    <div class="form-control Option" ng-show="cardPay">
+                        <div class=" col-md-12  card_body ">
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <label>Enter Amount</label>
+                                    <input type="number" class="form-control" id="enterdAmount" ng-model="enterdAmount" placeholder="RS.00.00">
+                                    <small class="form-text text-muted">Enter amount in multipliers of 10</small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label>Card Number</label>
+                                    <input type="number" class="form-control" ng-model="cardNumber" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" onKeyPress="if(this.value.length==16) return false;"
+                                        min="0">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Card Type</label>
+                                    <select id="cardtype" class="form-control">
+                                        <option selected>Visa Card</option>
+                                        <option>Credit Card</option>
+                                        <option>Debit Card</option>
+                                    </select>
+                                </div>
+                                <div class="form-group  col-md-3">
+                                    <label>CCV/CVC</label>
+                                    <input type="number" class="form-control" id="ccv_cvc" ng-model="ccv_cvc" onKeyPress="if(this.value.length==3) return false;"
+                                        min="0">
+                                    <small class="form-text text-muted">3 digits</small>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="ops_body_cardConf col-md-12">
+                            <button type="button" class="btn-default  confButton1" ng-click="Cardpay_method()">Proceed Payment</button>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row col-md-6 col-sm-6 buttonGroup">
+
+                    <div class="buttonGroupContainer well well-sm">
+                        <div class="btn-group demoPadder " role="group" aria-label="Basic example">
+                            <button type="button" class="btn-lg btn-default bigButton" ng-click="backtoHome()">Home</button>
+                            <button type="button" class="btn-lg btn-default bigButton" ng-disabled="!showRload" ng-click="changeButtonStatus()">Reload</button>
+                            <button type="button" class="btn-lg btn-default bigButton" ng-click="endtranscation()">Exit</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+<style>
+    .heading {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 4.5vh;
+}
+
+.demoPadder {
+    width: 90%;
+    font-size: 6vh;
+
+}
+
+.buttonGroupContainer {
+    padding-left: 11%;
+    width: 100%;
+    height: 27vh;
+}
+
+/* .body {
+    height: 100%;
+} */
+
+.col-form-label {
+    font-size: 1.7vh;
+}
+
+.touch-card{
+    width: 10vh;
+    height: 10vh;
+    margin: auto 10px;
+   
+}
+
+.cardNumber{
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 4%;
+    box-shadow: 2px 3px 5px 1px;
+    border-radius: 5px;
+    text-align: center;
+}
+.cardInsert{
+
+    text-align: center;
+    width: 100%;
+}
+
+.cardInsert_body{
+    padding: 3%;
+    border: solid;
+    width: 20%;
+    margin-top: 5%;
+    margin-left: 40%;
+    border-radius: 5px;
+}
+
+.bigButton {
+    width: 30%;
+    padding: 30.5% 0%;
+    font-size: 2.5vh;
+}
+
+.Option {
+    margin-top: 5.5%;
+    height: 27vh;
+}
+
+.msg {
+    text-align: center;
+    height: 15vh;
+    margin-top: 6vh;
+    font-family: 'Dosis', sans-serif;
+    font-size: 3vh;
+}
+
+.msg_getmoney {
+    text-align: center;
+    height: 10vh;
+    margin-top: 6vh;
+    font-family: 'Dosis', sans-serif;
+    font-size: 3vh;
+}
+
+.cashMsg {
+    height: 15vh;
+    margin-top: 6vh;
+    font-family: 'Dosis', sans-serif;
+    font-size: 3vh;
+}
+
+.cashMsg_content {
+    text-align: center;
+}
+
+.cashMsg_line1 {
+    margin-left: 8%;
+}
+
+.reloadOps {
+    font-family: 'Dosis', sans-serif;
+    font-size: 3vh;
+}
+
+.passegerDetails {
+    font-family: 'Dosis', sans-serif;
+    font-size: 3vh;
+}
+
+.buttonGroup {
+    margin-top: 2.5%;
+    margin-left: 2%;
+}
+
+.welcomeText {
+    font-size: 4vh;
+}
+
+
+.ops_body {
+    margin-top: 5%;
+    text-align: center;
+}
+
+.ops_body_cashConf {
+    margin-top: 10%;
+    text-align: center;
+}
+
+.ops_body_cardConf {
+    margin-top: -2%;
+    margin-left: 2%;
+}
+
+.ops_body_pay {
+    margin-top: 5%;
+    text-align: center;
+}
+
+.confButton2 {
+    margin-left: 30%;
+}
+
+.ops_header {
+    margin-top: -13%;
+    color: black;
+}
+
+
+.form-group{
+    margin-bottom: 6.2%;
+}
+
+/* card */
+.middle {
+    text-align: center;
+}
+
+.heading {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 4.5vh;
+}
+
+.name {
+    font-family: 'Dosis', sans-serif;
+    font-size: 3vh;
+}
+
+
+.info {
+    font-family: 'Dosis', sans-serif;
+    font-style: italic;
+}
+
+.progress{
+    width: 40%;
+    margin-left: 30%;
+}
+
+.banner{
+    margin-left: 30%;
+    font-size: 3vh;
+}
+
+.user-icon{
+    width: 5vh;
+    height: 5vh;
+    margin-top: 25%;
+}
+</style>
+
