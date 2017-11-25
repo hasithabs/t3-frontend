@@ -5,7 +5,7 @@ angular
     controller: function ($log, $q, FareCalculationSDK, SweetAlert, moment, Notification, localStorageService) {
       var self = this;
 
-      self.dateNow = moment().format('h:mm:ss - MMMM Do YYYY');;
+      self.dateNow = moment().format('h:mm:ss - MMMM Do YYYY');
 
       self.checkinSubmitBtnClicked = false;
       self.isCardValid = false;
@@ -18,7 +18,7 @@ angular
 
       self.checkinLocatin = "Malabe Bus Station, Malabe";
       self.travelMode = "DRIVING";
-      self.travelRate = 10/1000;
+      self.travelRate = 10 / 1000;
       // self.origin = "Kandy-Colombo Intercity Bus Station";
       // self.destination = "Colombo Central Bus Stand";
 
@@ -119,20 +119,19 @@ angular
         var deferred = $q.defer();
 
         var request = {
-          origin      : startLocation,
-          destination : endLocation,
-          travelMode  : self.travelMode
+          origin: startLocation,
+          destination: endLocation,
+          travelMode: self.travelMode
         };
 
-        directionsService.route(request, function(response, status) {
+        directionsService.route(request, function (response, status) {
           $log.log(response);
           $log.log(status);
-          if ( status == google.maps.DirectionsStatus.OK ) {
+          if (status == google.maps.DirectionsStatus.OK) {
             deferred.resolve(response.routes[0].legs[0]);
             self.tripDistance = response.routes[0].legs[0].distance;
             self.tripDuration = response.routes[0].legs[0].duration;
-          }
-          else {
+          } else {
             deferred.reject(status);
           }
         });
@@ -147,7 +146,7 @@ angular
       function promptDestination() {
         var deferred = $q.defer();
         self.isDestinationKnow = true;
-        swal({
+        SweetAlert.swal({
           title: "",
           text: "Please enter your destination place",
           type: "input",
@@ -155,13 +154,15 @@ angular
           closeOnConfirm: false,
           inputPlaceholder: "Type Destination"
         }, function (inputValue) {
-          if (inputValue === false) return false;
+          if (inputValue === false) {
+            return false;
+          }
           if (inputValue === "") {
             swal.showInputError("You need to write something!");
-            return false
+            return false;
           }
 
-          getGoogleMapDetails(self.checkinLocatin, inputValue).then(function ( response) {
+          getGoogleMapDetails(self.checkinLocatin, inputValue).then(function (response) {
             if (self.cardDetails.balance < ((response.distance.value/1000) * self.travelRate)) {
               SweetAlert.swal({
                 title: "Oops!",
