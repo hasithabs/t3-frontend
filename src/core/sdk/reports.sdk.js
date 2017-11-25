@@ -22,4 +22,14 @@ function ($log, $q, ReportsAPI) {
     $log.debug('reportsSDK:getRouteDetails');
     return deferred.promise;
   };
+  this.getTripDetails = function () {
+    var deferred = $q.defer();
+    ReportsAPI.tripDetails().get().$promise.then(function (response) {
+      deferred.resolve(response);
+    }, function (error) {
+      deferred.reject(error);
+    });
+    $log.debug('reportsSDK:getTripDetails');
+    return deferred.promise;
+  };
 });

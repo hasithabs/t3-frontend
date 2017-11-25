@@ -2,22 +2,22 @@
     <div class="col-md-12">
         <div class="portlet light portlet-fit bordered">
             <div class="portlet-title">
-                <div class="caption">
+                <div class="caption font-blue">
                     <i class=" icon-layers font-blue"></i>
-                    <span class="caption-subject font-blue bold uppercase">Routes</span>
+                    Routes
                 </div>
             </div>
             <div class="portlet-body">
                 <div>
-                    <span class="font-blue bold uppercase">Start : </span>{{$ctrl.StartPoint}}
+                   Start : {{$ctrl.StartPoint}}
                 </div>
                 <div>
-                    <span class="font-blue bold uppercase">destination : </span>{{$ctrl.EndPoint}}
+                    Destination : {{$ctrl.EndPoint}}
                 </div>
                 <div id="{{route.id}}" map-lazy-load="https://maps.google.com/maps/api/js?key={{$ctrl.MapAPIKey}}&callback=initMap">
                     <ng-map id="{{route.route_id}}" zoom="14" style="height:90%">
                         <directions draggable="false" 
-                            travel-mode="DRIVING" 
+                            travel-mode="DRIVING" panel="directions-panel"
                             origin="{{$ctrl.StartPoint}}" 
                             destination="{{$ctrl.EndPoint}}">
                         </directions>
@@ -45,7 +45,11 @@
                             </tbody>
                         </table>
                     </div>
+                   
             </div>
         </div>
+    </div>
+    <div class="col-md-12">
+        <div id="directions-panel">  </div>
     </div>
 </div>
