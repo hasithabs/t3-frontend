@@ -1,0 +1,50 @@
+<div>
+<div>
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="">
+                <i class="icon-settings font-blue"></i>
+                Trip Details
+            </div>
+            <div class="actions">
+            </br></br></br>
+            <form  class="ng-pristine ng-valid">
+                <i class="fa fa-search"></i>
+                <input type="text" ng-model="$ctrl.searchText">
+            </form>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="table-scrollable">
+                <table class="table table-hover table-light">
+                    <thead>
+                        <tr>
+                            <th class="font-blue"> ID </th>
+                            <th class="font-blue"> Bus Number </th>
+                            <th class="font-blue"> Bus Type </th>
+                            <th class="font-blue"> Route Number </th>
+                            <th class="font-blue"> Route Name </th>
+                            <th class="font-blue"> Total Income (Rs) </th>
+                            <th class="font-blue"> Total Passengers </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="trip in $ctrl.trips | filter:$ctrl.searchText">
+                            <td> {{trip.tripid}} </td>
+                            <td> {{trip.bus}} </td>
+                            <td> {{trip.busType}} </td>
+                            <td> {{trip.route}}</td>
+                            <td> {{trip.routeName}}</td>
+                            <td> {{trip.pasCount}}</td>
+                            <td> {{trip.totIncome}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="actions">
+                <div class="btn-group btn-group-devided" data-toggle="buttons">
+                    <button type="button" class="btn blue">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>

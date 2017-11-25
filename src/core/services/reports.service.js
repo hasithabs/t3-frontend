@@ -4,7 +4,8 @@ angular
 function ($resource, SETTINGS) {
   var services = {
     busDetails: busDetails,
-    routeDetails: routeDetails
+    routeDetails: routeDetails,
+    tripDetails: tripDetails
   };
 
   function busDetails() {
@@ -19,6 +20,16 @@ function ($resource, SETTINGS) {
   }
   function routeDetails() {
     var url = SETTINGS.SITE_URL + '/routes';
+    return $resource(url, {}, {
+      get: {
+        method: 'GET',
+        isArray: false,
+        cancellable: true
+      }
+    });
+  }
+  function tripDetails() {
+    var url = SETTINGS.SITE_URL + '/trips';
     return $resource(url, {}, {
       get: {
         method: 'GET',
