@@ -10,6 +10,7 @@
     "font-awesome": "^4.7.0",
     "simple-line-icons": "^2.4.1",
     "ngmap": "^1.18.4",
+    "google-maps": "^3.2.1",
     "angular-loading-bar": "^0.9.0",
     "ngSweetAlert": "angular-sweetalert#^1.1.2",
     "sweetalert": "^1.1.3",

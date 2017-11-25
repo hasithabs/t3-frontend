@@ -1,0 +1,51 @@
+<div>
+    <div class="col-md-12">
+        <div class="portlet light portlet-fit bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class=" icon-layers font-blue"></i>
+                    <span class="caption-subject font-blue bold uppercase">Routes</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div>
+                    <span class="font-blue bold uppercase">Start : </span>{{$ctrl.StartPoint}}
+                </div>
+                <div>
+                    <span class="font-blue bold uppercase">destination : </span>{{$ctrl.EndPoint}}
+                </div>
+                <div id="{{route.id}}" map-lazy-load="https://maps.google.com/maps/api/js?key={{$ctrl.MapAPIKey}}&callback=initMap">
+                    <ng-map id="{{route.route_id}}" zoom="14" style="height:90%">
+                        <directions draggable="false" 
+                            travel-mode="DRIVING" 
+                            origin="{{$ctrl.StartPoint}}" 
+                            destination="{{$ctrl.EndPoint}}">
+                        </directions>
+                    </ng-map>
+                </div>
+                <div class="table-scrollable">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr>
+                                    <th class="font-blue"> Route ID </th>
+                                    <th class="font-blue"> Route Name </th>
+                                    <th class="font-blue"> Start Point </th>
+                                    <th class="font-blue"> End Point </th>
+                                    <th class="font-blue"> Number of Halts </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="route in $ctrl.routeDetails" ng-click="$ctrl.setMap(route.start,route.end)">
+                                    <td> {{route.route_id}} </td>
+                                    <td> {{route.route_name}} </td>
+                                    <td> {{route.start}} </td>
+                                    <td> {{route.end}}</td>
+                                    <td> {{route.stopping_count}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

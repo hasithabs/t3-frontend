@@ -21,6 +21,30 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('app.report', {
+      url: '/report',
+      views: {
+        mainContent: {
+          component: 'reportCom'
+        }
+      }
+    })
+    .state('app.bus-details', {
+      url: '/bus-details',
+      views: {
+        mainContent: {
+          component: 'busDetailsCom'
+        }
+      }
+    })
+    .state('app.route-details', {
+      url: '/route-details',
+      views: {
+        mainContent: {
+          component: 'routeDetailsCom'
+        }
+      }
+    })
     .state('app.sample', {
       url: '/sample',
       views: {
