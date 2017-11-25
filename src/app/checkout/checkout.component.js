@@ -1,13 +1,13 @@
 angular
   .module('app')
-  .component('checkinCom', {
-    templateUrl: 'app/checkin/template/checkin.html',
+  .component('checkoutCom', {
+    templateUrl: 'app/checkout/template/checkout.html',
     controller: function ($log, $q, FareCalculationSDK, SweetAlert, moment, Notification, localStorageService) {
       var self = this;
 
       self.dateNow = moment().format('h:mm:ss - MMMM Do YYYY');;
 
-      self.checkinSubmitBtnClicked = false;
+      self.checkoutSubmitBtnClicked = false;
       self.isCardValid = false;
       self.isDestinationKnow = false;
 
@@ -16,7 +16,10 @@ angular
       self.tripId = 1;
       self.cardId = 123456;
 
-      self.checkinLocatin = "Malabe Bus Station, Malabe";
+      self.checkinLocatin = localStorageService.get("t3checkin-" + self.cardId);
+      console.log(self.checkinLocatin);
+      self.checkoutLocatin = "Rajagiriya Bus Station";
+
       self.travelMode = "DRIVING";
       self.travelRate = 10/1000;
       // self.origin = "Kandy-Colombo Intercity Bus Station";
@@ -55,7 +58,7 @@ angular
           $log.log(self.routeDetails);
           deferred.resolve(response.content);
 
-          getGoogleMapDetails(self.checkinLocatin, self.routeDetails.end);
+          getGoogleMapDetails(self.routeDetails.start, self.routeDetails.end);
         }, function (error) {
           $log.debug(error);
           deferred.reject(error);
@@ -67,7 +70,7 @@ angular
       /**
        * Gets the trip details.
        *
-       * @return     {object}  The route details.
+       * @return     {object}  The trip details.
        */
       function getTripDetails() {
         var deferred = $q.defer();
@@ -97,6 +100,30 @@ angular
         var deferred = $q.defer();
         FareCalculationSDK.getCards(cardId).then(function (response) {
           self.cardDetails = response.content[0];
+          self.availableBalance = self.cardDetails.balance;
+          $log.log("*********self.cardDetails********");
+          $log.log(self.cardDetails);
+          deferred.resolve(response.content);
+        }, function (error) {
+          $log.debug(error);
+          deferred.reject(error);
+        });
+
+        return deferred.promise;
+      }
+
+      /**
+       * Gets the card details.
+       *
+       * @param      {int}  cardId  The card identifier
+       */
+      function updateCardDetails(cardObj) {
+        var deferred = $q.defer();
+        FareCalculationSDK.updateCard(cardObj).then(function (response) {
+          Notification.success("Trip fee deduct successfully");
+          self.isCardValid = true;
+
+          self.cardDetails = response.content;
           $log.log("*********self.cardDetails********");
           $log.log(self.cardDetails);
           deferred.resolve(response.content);
@@ -144,71 +171,12 @@ angular
       getRouteDetails();
       getTripDetails();
 
-      function promptDestination() {
-        var deferred = $q.defer();
-        self.isDestinationKnow = true;
-        swal({
-          title: "",
-          text: "Please enter your destination place",
-          type: "input",
-          showCancelButton: false,
-          closeOnConfirm: false,
-          inputPlaceholder: "Type Destination"
-        }, function (inputValue) {
-          if (inputValue === false) return false;
-          if (inputValue === "") {
-            swal.showInputError("You need to write something!");
-            return false
-          }
-
-          getGoogleMapDetails(self.checkinLocatin, inputValue).then(function ( response) {
-            if (self.cardDetails.balance < ((response.distance.value/1000) * self.travelRate)) {
-              SweetAlert.swal({
-                title: "Oops!",
-                text: "Your current balance is not enough to travel to the given destination",
-                type: "error",
-                timer: 3000,
-                showConfirmButton: true
-              }, function () {
-                SweetAlert.close();
-                deferred.reject("cant");
-              });
-            } else {
-              self.routeDetails.end = inputValue;
-              SweetAlert.swal({
-                title: "Nice!",
-                text: "You'll arrive in " + self.tripDuration.text,
-                type: "success",
-                timer: 2000,
-                showConfirmButton: true
-              }, function () {
-                SweetAlert.close();
-                deferred.resolve("can");
-              });
-            }
-          }, function (error) {
-            Notification.error("We can't find your destination. Please try again");
-              // SweetAlert.swal({
-              //   title: "Oops!",
-              //   text: "We can't find your destination.",
-              //   type: "error",
-              //   timer: 2000,
-              //   showConfirmButton: false
-              // }, function () {
-              //   return false;
-              // });
-          });
-        })
-
-        return deferred.promise;
-      }
-
       /**
-       * Passenger Check In
+       * Passenger Check Out
        */
-      self.onCheckInClicked = function () {
+      self.onCheckOutClicked = function () {
+        self.checkoutSubmitBtnClicked = true;
         self.dateNow = moment().format('h:mm:ss - MMMM Do YYYY');;
-        self.checkinSubmitBtnClicked = true;
 
         if (self.checkInForm.$invalid) {
           return;
@@ -230,50 +198,24 @@ angular
             return;
           } else {
             cardItem = cardItem[0];
-          }
 
-          if (cardItem.status !== "active") {
-            SweetAlert.swal({
-              title: "Oops!",
-              text: "Your card is deactivated",
-              type: "error",
-              timer: 2000,
-              showConfirmButton: true
-            }, function () {
-              SweetAlert.close();
-              return false;
-            });
-          }
+            getGoogleMapDetails(self.checkinLocatin, self.checkoutLocatin).then(function (response) {
+              self.tripFee = ((self.tripDistance.value / 1000) * self.travelRate);
+              cardItem.balance -= self.tripFee;
 
-          if (moment().diff(cardItem.expiry_date, 'days') >= 0) {
-            SweetAlert.swal({
-              title: "Oops!",
-              text: "Your card is expired.",
-              type: "error",
-              timer: 2000,
-              showConfirmButton: true
-            }, function () {
-              SweetAlert.close();
-              return false;
-            });
-          }
-
-          if (cardItem.balance < ((self.tripDistance.value/1000) * self.travelRate)) {
-            promptDestination().then(function (response) {
-              console.log("response--------");
-              console.log(response);
-
-              if (response == "can") {
-                self.isCardValid = true;
-                localStorageService.set("t3checkin-" + self.cardId, self.checkinLocatin);
-              }
+              var updateCardObj = {
+                card_number: cardItem.card_number,
+                account_number: cardItem.account_number,
+                activation_date: cardItem.activation_date,
+                expiry_date: cardItem.expiry_date,
+                status: cardItem.status,
+                balance: cardItem.balance,
+                type: cardItem.type
+              };
+              updateCardDetails(updateCardObj);
             }, function (error) {
-              console.log("error------");
-              console.log(error);
-            });
-          } else {
-            self.isCardValid = true;
-            localStorageService.set("t3checkin-" + self.cardId, self.checkinLocatin);
+              Notification.error("We can't find your trip locations. Please try again");
+            })
           }
         }, function (error) {
           SweetAlert.swal({

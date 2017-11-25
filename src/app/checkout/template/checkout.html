@@ -1,5 +1,5 @@
 <!-- BEGIN PAGE TITLE-->
-<h1 class="page-title hb-page-title">Check In<br/><small>Customer enters T3 card</small>
+<h1 class="page-title hb-page-title">Check Out<br/><small>Customer enters T3 card</small>
 </h1>
 <!-- END PAGE TITLE-->
 
@@ -9,14 +9,14 @@
   <div class="col-md-12">
     <form name="$ctrl.checkInForm">
       <div class="col-md-9">
-        <div class="form-group form-md-line-input" ng-class="{ 'has-error' : $ctrl.checkInForm.cardId.$invalid && $ctrl.checkinSubmitBtnClicked }">
+        <div class="form-group form-md-line-input" ng-class="{ 'has-error' : $ctrl.checkInForm.cardId.$invalid && $ctrl.checkoutSubmitBtnClicked }">
           <input name="cardId" type="number" class="form-control" ng-model="$ctrl.cardId" ng-pattern="/^-?[0-9][^\.]*$/" min="0" required>
           <label for="form_control_1">Card Id</label>
-          <span ng-show="$ctrl.checkInForm.cardId.$invalid && $ctrl.checkinSubmitBtnClicked" class="help-block help-block-error">This field is invalid.</span>
+          <span ng-show="$ctrl.checkInForm.cardId.$invalid && $ctrl.checkoutSubmitBtnClicked" class="help-block help-block-error">This field is invalid.</span>
         </div>
       </div>
       <div class="col-md-3 form-inline-btn-block">
-        <button ng-disabled="$ctrl.isCardValid" type="button" class="btn btn-md blue" ng-click="$ctrl.onCheckInClicked()">Check in</button>
+        <button type="button" class="btn btn-md blue" ng-click="$ctrl.onCheckOutClicked()">Check out</button>
       </div>
     </form>
   </div>
@@ -30,7 +30,7 @@
       <div class="ci-title-section col-md-12">
         <div>
           <img src="resources/images/theme/photo3.jpg" alt="">
-          <h2>Welcome Back</h2>
+          <h2>Thank you Have a nice day!!</h2>
         </div>
       </div>
 
@@ -39,26 +39,38 @@
           <tbody>
             <tr>
               <td>Trip Status</td>
-              <td>Check-in</td>
+              <td>Check-out</td>
+            </tr>
+            <tr>
+              <td>Trip Fee</td>
+              <td>Rs. {{$ctrl.tripFee | number : 2}}</td>
             </tr>
             <tr>
               <td>Available balance</td>
+              <td>Rs. {{$ctrl.availableBalance | number : 2}}</td>
+            </tr>
+            <tr>
+              <td>Updated balance</td>
               <td>Rs. {{$ctrl.cardDetails.balance | number : 2}}</td>
             </tr>
             <tr>
               <td>Check-in Location</td>
-              <td>{{$ctrl.routeDetails.start}}</td>
+              <td>{{$ctrl.checkinLocatin}}</td>
             </tr>
-            <tr ng-if="$ctrl.isDestinationKnow">
-              <td>Distance</td>
+            <tr>
+              <td>Check-out Location</td>
+              <td>{{$ctrl.checkoutLocatin}}</td>
+            </tr>
+            <tr>
+              <td>Travelled Distance</td>
               <td>{{$ctrl.tripDistance.text}}</td>
             </tr>
-            <tr ng-if="$ctrl.isDestinationKnow">
-              <td>Trip Duration</td>
+            <tr>
+              <td>Trip Time</td>
               <td>{{$ctrl.tripDuration.text}}</td>
             </tr>
             <tr>
-              <td>Check-in Time and Date</td>
+              <td>Check-out Time and Date</td>
               <td>{{$ctrl.dateNow}}</td>
             </tr>
           </tbody>
@@ -71,8 +83,8 @@
           draggable="false"
           panel="directions-panel"
           travel-mode="{{$ctrl.travelMode}}"
-          origin="{{$ctrl.routeDetails.start}}"
-          destination="{{$ctrl.routeDetails.end}}"></directions>
+          origin="{{$ctrl.checkinLocatin}}"
+          destination="{{$ctrl.checkoutLocatin}}"></directions>
         </ng-map>
         <div class="ci-end-msg">Enjoy the Trip Have a nice Trip !!!</div>
       </div>

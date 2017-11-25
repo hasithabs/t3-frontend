@@ -6,7 +6,9 @@ angular
       var services = {
         card: card,
         bus: bus,
-        route: route
+        route: route,
+        trip: trip,
+        payment: payment
       };
 
       function card() {
@@ -41,6 +43,33 @@ angular
         return $resource(url, {did: '@id'}, {
           get: {
             method: 'GET',
+            isArray: false,
+            cancellable: true
+          }
+        });
+      }
+
+      function trip() {
+        var url = SETTINGS.SITE_URL + '/trips/:id';
+        return $resource(url, {did: '@id'}, {
+          get: {
+            method: 'GET',
+            isArray: false,
+            cancellable: true
+          }
+        });
+      }
+
+      function payment() {
+        var url = SETTINGS.SITE_URL + ' payments/:id';
+        return $resource(url, {did: '@id'}, {
+          get: {
+            method: 'GET',
+            isArray: false,
+            cancellable: true
+          },
+          save: {
+            method: 'POST',
             isArray: false,
             cancellable: true
           }
