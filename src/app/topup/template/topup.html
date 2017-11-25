@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="row col-md-6 col-sm-6 details">
-                    <div class="form-group Option" ng-show="!reload && !cashPay && !cashPayConf && !cardPay">
+                    <div class="form-group " ng-show="!reload && !cashPay && !cashPayConf && !cardPay">
 
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-4 col-form-label">Name</label>
@@ -110,7 +110,7 @@
                         </div>
 
                     </div>
-                    <div class="form-control Option" ng-show="reload">
+                    <div class="Option_box  " ng-show="reload">
                         <div class="ops_header col-md-12">
                             <div class=" msg">
                                 <div>Which method Do you prefer to do the Roload?</div>
@@ -123,7 +123,7 @@
                     </div>
 
 
-                    <div class="form-control Option" ng-show="cashPay">
+                    <div class=" Option_box" ng-show="cashPay">
                         <div class="ops_header col-md-12">
                             <div>
                                 <div class="msg_getmoney">Please Enter money to money box.</div>
@@ -140,7 +140,7 @@
                         </div>
                     </div>
 
-                    <div class="form-control Option" ng-show="cashPayConf">
+                    <div class=" Option_box" ng-show="cashPayConf">
                         <div class="ops_header col-md-12">
                             <div class="cashMsg">
                                 <div class="cashMsg_line1">You have Entered,</div>
@@ -154,7 +154,7 @@
                         </div>
                     </div>
 
-                    <div class="form-control Option" ng-show="cardPay">
+                    <div class=" Option_box" ng-show="cardPay">
                         <div class=" col-md-12  card_body ">
                             <div class="form-row">
                                 <div class="form-group col-md-8">
@@ -196,7 +196,7 @@
 
                 <div class="row col-md-6 col-sm-6 buttonGroup">
 
-                    <div class="buttonGroupContainer well well-sm">
+                    <div class="buttonGroupContainer ">
                         <div class="btn-group demoPadder " role="group" aria-label="Basic example">
                             <button type="button" class="btn-lg btn-default bigButton" ng-click="backtoHome()">Home</button>
                             <button type="button" class="btn-lg btn-default bigButton" ng-disabled="!showRload" ng-click="changeButtonStatus()">Reload</button>
@@ -228,7 +228,7 @@
 .buttonGroupContainer {
     padding-left: 11%;
     width: 100%;
-    height: 27vh;
+    height: 33vh;
 }
 
 /* .body {
@@ -271,13 +271,14 @@
 
 .bigButton {
     width: 30%;
-    padding: 30.5% 0%;
+    padding: 26.5% 0%;
     font-size: 2.5vh;
 }
+}
 
-.Option {
+.Option_box {
     margin-top: 5.5%;
-    height: 27vh;
+    height: 33vh;
 }
 
 .msg {
@@ -322,7 +323,6 @@
 }
 
 .buttonGroup {
-    margin-top: 2.5%;
     margin-left: 2%;
 }
 
@@ -356,13 +356,13 @@
 }
 
 .ops_header {
-    margin-top: -13%;
+    margin-top: -5%;
     color: black;
 }
 
 
 .form-group{
-    margin-bottom: 6.2%;
+    margin-bottom: 4.2%;
 }
 
 /* card */
@@ -401,5 +401,10 @@
     height: 5vh;
     margin-top: 25%;
 }
+
+.detail_form{
+    margin-top: 2.5%;
+}
+
 </style>
 

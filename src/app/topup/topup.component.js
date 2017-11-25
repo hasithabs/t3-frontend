@@ -4,8 +4,10 @@ angular
         templateUrl: 'app/topup/template/topup.html',
         controller: function ($scope, $http, $filter, $window) {
             // $scope.cardNumber = '5755757';
+            //base URL
             $scope.baseUrl = 'http://localhost:9000/';
 
+            // Variable defining
             $scope.processIndicator = false;
             $scope.cardSwap = true;
             $scope.topup = false;
@@ -27,7 +29,8 @@ angular
             $scope.correctCard = false;
 
 
-            //press enter key
+            // after enter the card number, press enter key; then this methord will fire
+            // cardnumber => carrect travel card number
             var wage = document.getElementById("cardNumber");
             wage.addEventListener("keydown", function (e) {
                 if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
@@ -36,6 +39,7 @@ angular
                 }
             });
 
+            // call to load the main function
             function validate(e) {
                 var text = e.target.value;
 
@@ -44,6 +48,8 @@ angular
                     $scope.getData();
                 }
             }
+
+            // loading bar
             $scope.getData = function () {
 
                 var elem = document.getElementById("myBar");
@@ -56,19 +62,14 @@ angular
                             $scope.cardSwap = false;
                             $scope.topup = true;
                         });
-
-
-
                     } else {
                         width++;
                         elem.style.width = width + '%';
                     }
                 }
-
-
             }
-            //change beetween pages
 
+            //change beetween pages
             //load card data
             $scope.loadData = function () {
                 $http.get($scope.baseUrl + 'cards/').then(function (cardsResult) {
@@ -103,14 +104,13 @@ angular
                 });
             }
 
-
-
-
+            // hide and show button according to the action
             $scope.changeButtonStatus = function () {
                 $scope.showRload = false;
                 $scope.reload = true;
             }
 
+            // redirrect back to the home page
             $scope.backtoHome = function () {
 
                 if (specialAccess) {
@@ -150,12 +150,11 @@ angular
                     //     $scope.cashPay = false;
                     //     $scope.cashPayConf = false;
                     //     $scope.cardPay = false;
-
                     // }
                 }
             }
 
-
+            // button press of cash payment page
             $scope.docashPayment = function () {
 
                 $scope.reload = false;
@@ -163,6 +162,7 @@ angular
 
             }
 
+            // card payment button press
             $scope.docardPayment = function () {
                 $scope.reload = false;
                 $scope.cardPay = true;
