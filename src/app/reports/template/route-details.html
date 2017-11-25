@@ -17,7 +17,7 @@
                 <div id="{{route.id}}" map-lazy-load="https://maps.google.com/maps/api/js?key={{$ctrl.MapAPIKey}}&callback=initMap">
                     <ng-map id="{{route.route_id}}" zoom="14" style="height:90%">
                         <directions draggable="false" 
-                            travel-mode="DRIVING" 
+                            travel-mode="DRIVING" panel="directions-panel"
                             origin="{{$ctrl.StartPoint}}" 
                             destination="{{$ctrl.EndPoint}}">
                         </directions>
@@ -45,7 +45,11 @@
                             </tbody>
                         </table>
                     </div>
+                   
             </div>
         </div>
+    </div>
+    <div class="col-md-12">
+        <div id="directions-panel">  </div>
     </div>
 </div>
