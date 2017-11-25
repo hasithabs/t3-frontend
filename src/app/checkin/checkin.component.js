@@ -125,8 +125,8 @@ angular
         };
 
         directionsService.route(request, function(response, status) {
-          console.log(response);
-          console.log(status);
+          $log.log(response);
+          $log.log(status);
           if ( status == google.maps.DirectionsStatus.OK ) {
             deferred.resolve(response.routes[0].legs[0]);
             self.tripDistance = response.routes[0].legs[0].distance;
@@ -215,7 +215,7 @@ angular
         }
 
         getCardDetails(self.cardId).then(function (cardItem) {
-          console.log(cardItem);
+          $log.log(cardItem);
 
           if (cardItem.length == 0) {
             SweetAlert.swal({
@@ -260,16 +260,16 @@ angular
 
           if (cardItem.balance < ((self.tripDistance.value/1000) * self.travelRate)) {
             promptDestination().then(function (response) {
-              console.log("response--------");
-              console.log(response);
+              $log.log("response--------");
+              $log.log(response);
 
               if (response == "can") {
                 self.isCardValid = true;
                 localStorageService.set("t3checkin-" + self.cardId, self.checkinLocatin);
               }
             }, function (error) {
-              console.log("error------");
-              console.log(error);
+              $log.log("error------");
+              $log.log(error);
             });
           } else {
             self.isCardValid = true;

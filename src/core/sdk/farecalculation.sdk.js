@@ -13,9 +13,9 @@ angular
         return deferred.promise;
       };
 
-      this.updateCard = function (cardObj) {
+      this.updateCard = function (cardObj, cardId) {
         var deferred = $q.defer();
-        FareCalculationAPI.card().update({id: cardObj.card_number}, cardObj).$promise.then(function (response) {
+        FareCalculationAPI.card().update({id: cardId}, cardObj).$promise.then(function (response) {
           deferred.resolve(response);
         }, function (error) {
           deferred.reject(error);

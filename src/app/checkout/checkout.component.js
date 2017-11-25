@@ -17,7 +17,7 @@ angular
       self.cardId = 123456;
 
       self.checkinLocatin = localStorageService.get("t3checkin-" + self.cardId);
-      console.log(self.checkinLocatin);
+      $log.log(self.checkinLocatin);
       self.checkoutLocatin = "Rajagiriya Bus Station";
 
       self.travelMode = "DRIVING";
@@ -117,9 +117,9 @@ angular
        *
        * @param      {int}  cardId  The card identifier
        */
-      function updateCardDetails(cardObj) {
+      function updateCardDetails(cardObj, CardId) {
         var deferred = $q.defer();
-        FareCalculationSDK.updateCard(cardObj).then(function (response) {
+        FareCalculationSDK.updateCard(cardObj, CardId).then(function (response) {
           Notification.success("Trip fee deduct successfully");
           self.isCardValid = true;
 
@@ -152,8 +152,8 @@ angular
         };
 
         directionsService.route(request, function(response, status) {
-          console.log(response);
-          console.log(status);
+          $log.log(response);
+          $log.log(status);
           if ( status == google.maps.DirectionsStatus.OK ) {
             deferred.resolve(response.routes[0].legs[0]);
             self.tripDistance = response.routes[0].legs[0].distance;
@@ -183,7 +183,7 @@ angular
         }
 
         getCardDetails(self.cardId).then(function (cardItem) {
-          console.log(cardItem);
+          $log.log(cardItem);
 
           if (cardItem.length == 0) {
             SweetAlert.swal({
@@ -212,7 +212,7 @@ angular
                 balance: cardItem.balance,
                 type: cardItem.type
               };
-              updateCardDetails(updateCardObj);
+              updateCardDetails(updateCardObj, cardItem._id);
             }, function (error) {
               Notification.error("We can't find your trip locations. Please try again");
             })
